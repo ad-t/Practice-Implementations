@@ -3,7 +3,7 @@ CFLAGS=-Wall -Werror
 BIN=queuetest
 
 build: main.o queue.o
-	$(CC) $(CFLAGS) -o $(BIN) main.o queue.o
+	$(CC) $(CFLAGS) queue.o main.o -o $(BIN)
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp

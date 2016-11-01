@@ -1,3 +1,6 @@
+#ifndef TQUEUE_H
+#define TQUEUE_H
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,3 +19,5 @@ class TQueue {
     private:
         vector<T> elements;
 };
+
+#endif

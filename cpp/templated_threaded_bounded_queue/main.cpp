@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "queue.hpp"
+#include "queue.cpp"
 
 int main (int argc, char * argv[]) {
-    TQueue<int> q = TQueue<int>();
+    TQueue<int> q = TQueue<int>();;
     q.addElement(6);
     q.addElement(4);
     q.addElement(2);
@@ -17,5 +17,6 @@ int main (int argc, char * argv[]) {
     q.addElement(12);
     q.addElement(19);
     q.addElement(30);
+    q.printElements();
     return EXIT_SUCCESS;
 }
