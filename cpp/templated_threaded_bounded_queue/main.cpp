@@ -5,6 +5,7 @@
 #include "queue.cpp"
 
 int main (int argc, char * argv[]) {
+    // the plan is to implement an ordered queue
     TQueue<int> q = TQueue<int>();;
     q.addElement(6);
     q.addElement(4);

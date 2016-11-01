@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
@@ -18,20 +19,24 @@ class TQueue {
         void printElements();
 
     private:
-        vector<T> elements;
+        vector<T> _elements;
+        static bool ascendingComparator(T a, T b);
 };
 
 template <class T> TQueue<T>::TQueue() {
-    this->elements = vector<T>();
+    this->_elements = vector<T>();
 }
 
 template <class T> TQueue<T>::TQueue(int amt) {
-    this->elements = vector<T>(amt);
+    this->_elements = vector<T>(amt);
 }
 
 template <class T> bool TQueue<T>::addElement(T element) {
     try {
-        this->elements.push_back(element);
+        this->_elements.push_back(element);
+        bool (*fnptr)(int, int);
+        fnptr = &ascendingComparator;
+        sort(this->_elements.begin(), this->_elements.end(), fnptr);
         return true;
     } catch (exception& e) { 
         cout << e.what() << "\n" << endl;
@@ -41,12 +46,17 @@ template <class T> bool TQueue<T>::addElement(T element) {
 
 template <class T>
 void TQueue<T>::printElements() {
-    for (T el : this->elements) {
+    for (T el : this->_elements) {
         cout << el << endl;
     }
 }
 
 template <class T>
 TQueue<T>::~TQueue() {}
+
+template <class T>
+bool TQueue<T>::ascendingComparator(T a, T b) {
+    return a < b;
+}
 
 #endif
