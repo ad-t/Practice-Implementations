@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <algorithm>
 #include <vector>
+#include <mutex>
+#include <condition_variable>
 
 using namespace std;
 
@@ -16,6 +18,7 @@ class TQueue {
         TQueue(int amt);
         ~TQueue();
         bool addElement(T element);
+        void pop();
         void printElements();
 
     private:
@@ -45,10 +48,17 @@ template <class T> bool TQueue<T>::addElement(T element) {
 }
 
 template <class T>
+void TQueue<T>::pop() {
+    this->_elements.pop_back();
+}
+
+template <class T>
 void TQueue<T>::printElements() {
+    cout << "[";
     for (T el : this->_elements) {
-        cout << el << endl;
+        cout << el << " ";
     }
+    cout << "]\n";
 }
 
 template <class T>
