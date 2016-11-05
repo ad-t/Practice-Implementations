@@ -17,7 +17,11 @@ class Complex {
             return Complex(a._re - b._re, a._im - b._im);
         }
         friend std::ostream& operator<<(std::ostream& os,  Complex a) {
-            os << a._re << " + " << a._im << "i";
+            if (a._im < 0) {
+                os << a._re << " - " << -1 * a._im << "i";
+            } else {
+                os << a._re << " + " << a._im << "i";
+            }
             return os;
         }
 
