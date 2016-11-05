@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <exception>
-#include <mutex>
-#include <condition_variable>
 
 #include "queue.cpp"
+
+using namespace std;
 
 #define AMT_THREADS 10
 
@@ -15,7 +15,7 @@ TQueue<int> q = TQueue<int>();
 void *producer(void *) {
     cout << "Producer thread started!" << endl;
     for (int i = 0; i < 10; i++) {
-        q.addElement(1);
+        q.addElement(i);
     }
     cout << "Producer thread finished!" << endl;
     pthread_exit(NULL);
@@ -32,7 +32,8 @@ void *consumer(void *) {
 
 int main (int argc, char * argv[]) {
     // the plan is to implement an ordered queue
-    pthread_t threads[AMT_THREADS * 3];
+    /* MULTITHREADING CODE
+     * pthread_t threads[AMT_THREADS * 3];
     int i;
     try {
         for (i = 0; i < AMT_THREADS; i++) {
@@ -48,6 +49,18 @@ int main (int argc, char * argv[]) {
     for (int i = 0; i < AMT_THREADS * 3; i++) {
         pthread_join(threads[i], NULL);
     }
-    q.printElements();
+    */
+    TQueue<int> qint = TQueue<int>();
+    TQueue<int> qint2 = TQueue<int>();
+    for (int i = 0; i < 10; i++) {
+        qint.addElement(i);
+        qint2.addElement(10 - i);
+    }
+
+    qint.printElements();
+    qint2.printElements();
+
+    TQueue<int> q3 = qint + qint2;
+    q3.printElements();
     return EXIT_SUCCESS;
 }
