@@ -1,5 +1,5 @@
 *.o
 *.swp
-
+commands.txt
 queuetest
 run
