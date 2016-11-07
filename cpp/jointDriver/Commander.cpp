@@ -27,11 +27,12 @@ bool Commander::makeCommand(string file, int jointID, int absolute_position) {
 bool Commander::performCommands(string file) {
     vector<Command> _commands = vector<Command>();
     ifstream commands_file(file.c_str());
-    while (!commands_file.eof()) {
+    while (true) {
         Command c;
         commands_file >> c._id;
         commands_file >> c._pos;
         _commands.push_back(c);
+        if (commands_file.eof()) { break; } 
         cout << c._id << " " << c._pos << endl;
     }
     commands_file.close();
