@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "Joint.hpp"
 
 Joint::Joint(int id) {
@@ -6,8 +7,10 @@ Joint::Joint(int id) {
 }
 
 int Joint::getID() { return this->_id; }
+int Joint::getPos() { return this->_current_position; }
 
 bool Joint::driveJoint(int absolute_position) {
+    if (this->_current_position == absolute_position) { return true; }
     bool forwards = true;
     if (this->_current_position > absolute_position) {
         forwards = false;

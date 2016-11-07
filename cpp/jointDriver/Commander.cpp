@@ -1,9 +1,11 @@
 #include <vector>
 #include <fstream>
+#include <unistd.h>
 
 #include "Commander.hpp"
 
-#define AMT_JOINTS 6
+#define AMT_JOINTS 9
+bool allSuccessful(bool successful[], int width, int amtOperational);
 
 using namespace std;
 
@@ -31,18 +33,29 @@ bool Commander::performCommands(string file) {
         Command c;
         commands_file >> c._id;
         commands_file >> c._pos;
-        _commands.push_back(c);
         if (commands_file.eof()) { break; } 
-        cout << c._id << " " << c._pos << endl;
+        // cout << c._id << " " << c._pos << endl;
+        _commands.push_back(c);
     }
     commands_file.close();
-    for (Command c : _commands) {
-        bool successful = this->_jointMaster->drive(c._id, c._pos);
-        if (!successful) {
-            return false;
+    bool successful[AMT_JOINTS] = { false };
+    while (!allSuccessful(successful, AMT_JOINTS, _commands.size())) {
+        for (Command c : _commands) {
+            successful[c._id] = this->_jointMaster->drive(c._id, c._pos);
         }
+        cout << this->_jointMaster;
     }
+    cout << endl;
     return true;
+}
+
+bool allSuccessful(bool successful[], int width, int amtOperational) {
+    int op = 0;
+    for (int i = 0; i < width; i++) {
+        if (op == amtOperational)   { return true; }
+        if (successful[i] == true)  { op++; }
+    }
+    return false;
 }
 
 Commander::~Commander() {};

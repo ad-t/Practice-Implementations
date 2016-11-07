@@ -6,8 +6,8 @@ class Joint {
         Joint(int id);
         bool driveJoint(int absolute_position);
         ~Joint();
-    protected:
         int getID();
+        int getPos();
     private:
         int _current_position;
         int _id;
