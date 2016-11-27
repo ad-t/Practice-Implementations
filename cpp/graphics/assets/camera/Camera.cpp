@@ -27,9 +27,7 @@ void Camera::refresh() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(this->_x, this->_y, this->_z, 
-               // this->_lookAt_x, this->_lookAt_y, this->_lookAt_z,
                 this->_lookAt_x + cos(this->_rotationAngle), this->_lookAt_y, this->_lookAt_z + sin(this->_rotationAngle),
-               // 0, 0, 0,
                 this->_rotationX, this->_rotationY, this->_rotationZ);
 }
 
@@ -46,9 +44,9 @@ void Camera::moveTo(double cx, double cy, double cz) {
     this->_x = cx;
     this->_y = cy;
     this->_z = cz;
-    this->_lookAt_x += cx;
-    this->_lookAt_y += cy;
-    this->_lookAt_z += cz; 
+    this->_lookAt_x = cx;
+    this->_lookAt_y = cy;
+    this->_lookAt_z = cz; 
 }
 
 void Camera::moveForwards() {

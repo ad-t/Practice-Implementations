@@ -4,9 +4,11 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <math.h>
+#include <vector>
 #include "assets/shapes/Shape.hpp"
 #include "assets/shapes/Cube.hpp"
 #include "assets/camera/Camera.hpp"
+#include "assets/shapes/Map.hpp"
 
 using namespace std;
 
@@ -16,12 +18,17 @@ void init(int argc, char *argv[]);
 void handleResize(int w, int h);
 void draw();
 void keyboardFunctions(unsigned char key, int x, int y);
+void mousePassive(int x, int y);
+void mouseActive(int button, int state, int x, int y);
+Map *map = new Map(10);
 
 int main (int argc, char * argv[]) {
     init(argc, argv);
     glutDisplayFunc(draw);
     glutReshapeFunc(handleResize);
     glutKeyboardFunc(keyboardFunctions);
+    glutMouseFunc(mouseActive);
+    glutPassiveMotionFunc(mousePassive);
     glutMainLoop();
     return EXIT_SUCCESS; 
 }
@@ -45,12 +52,8 @@ void handleResize(int w, int h) {
 void draw() {
     // axis: x (right) / y (up) / z (closeness)
     camera->refresh();
-    Cube *c = new Cube(3, 3, 3);
-    //glRotatef(45, 1, 0, 0);
-    //glRotatef(45, 0, 1, 0);
     glPushMatrix();
-        glTranslatef(0, 0, 10);
-        c->draw();
+        map->draw();
     glPopMatrix();
     glPushMatrix();
         glBegin(GL_LINES);
@@ -104,4 +107,11 @@ void keyboardFunctions(unsigned char key, int mx, int my) {
             break;
     }
     draw();
+}
+
+void mousePassive(int x, int y) {
+    cout << "MOUSE: x=" << x << " y=" << y << endl;
+}
+void mouseActive(int button, int state, int x, int y) {
+    cout << "MOUSE CLICK @: x=" << x << " y=" << y << endl;
 }
