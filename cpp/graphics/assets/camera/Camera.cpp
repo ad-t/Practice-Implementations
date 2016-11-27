@@ -22,9 +22,7 @@ void Camera::refresh() {
     cout << " lx=" << this->_lookAt_x;
     cout << " ly=" << this->_lookAt_y;
     cout << " lz=" << this->_lookAt_z;
-    cout << " rx=" << this->_rotationX;
-    cout << " ry=" << this->_rotationY;
-    cout << " rz=" << this->_rotationZ << endl;
+    cout << " rot=" << this->_rotationAngle << endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -35,7 +33,7 @@ void Camera::refresh() {
                 this->_rotationX, this->_rotationY, this->_rotationZ);
 }
 
-void Camera::move(int vx, int vy, int vz) {
+void Camera::move(double vx, double vy, double vz) {
     this->_x += vx;
     this->_y += vy;
     this->_z += vz;
@@ -44,7 +42,7 @@ void Camera::move(int vx, int vy, int vz) {
     this->_lookAt_z += vz; 
 }
 
-void Camera::moveTo(int cx, int cy, int cz) {
+void Camera::moveTo(double cx, double cy, double cz) {
     this->_x = cx;
     this->_y = cy;
     this->_z = cz;
@@ -54,19 +52,19 @@ void Camera::moveTo(int cx, int cy, int cz) {
 }
 
 void Camera::moveForwards() {
-    this->move(0, 0, 1);
+    this->move(cos(this->_rotationAngle), 0, sin(this->_rotationAngle));
 }
 
 void Camera::moveBackwards() {
-    this->move(0, 0, -1);
+    this->move(-cos(this->_rotationAngle), 0, -sin(this->_rotationAngle));
 }
 
 void Camera::moveLeft() {
-    this->move(-1, 0, 0);
+    this->move(cos(this->_rotationAngle - M_PI/2), 0, sin(this->_rotationAngle - M_PI/2));
 }
 
 void Camera::moveRight() {
-    this->move(1, 0, 0);
+    this->move(cos(this->_rotationAngle + M_PI/2), 0, sin(this->_rotationAngle + M_PI/2));
 }
 
 void Camera::moveUp() {

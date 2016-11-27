@@ -21,8 +21,8 @@ class Camera {
         void moveDown();
         void rotateLeft(double deg);
         void rotateRight(double deg);
-        void move(int vx, int vy, int vz);
-        void moveTo(int cx, int cy, int cz);
+        void move(double vx, double vy, double vz);
+        void moveTo(double cx, double cy, double cz);
         void refresh();
         double deg2rad(double deg);
     private:
